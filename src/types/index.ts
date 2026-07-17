@@ -1,4 +1,5 @@
-import type { CourseLevel } from "./course";
+import type { CourseLevel, CourseStatus } from "./course";
+import type { LessonProgressState } from "@/lib/progress";
 
 export type {
     Course,
@@ -30,6 +31,17 @@ export interface AuthContextValue {
     isLoading: boolean;
     login: (credentials: LoginCredentials) => Promise<void>;
     logout: () => void;
+}
+
+export interface ProgressContextValue {
+    progressState: LessonProgressState;
+    isLoading: boolean;
+    setLessonStatus: (
+        courseId: string,
+        lessonId: string,
+        status: CourseStatus,
+    ) => void;
+    resetCourseProgress: (courseId: string) => void;
 }
 
 export interface Paginate<T>{

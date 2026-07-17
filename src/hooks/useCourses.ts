@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Course, CourseFilters } from "@/types";
 import { fetchCourses } from "@/services/courseServices";
+import { applyLessonProgress } from "@/lib/progress";
+import { useProgress } from "@/contexts/ProgressContext";
 
 const defaultFilters: CourseFilters = {
   search: "",
@@ -15,6 +17,7 @@ export function useCourses() {
   const [filters, setFilters] = useState<CourseFilters>(defaultFilters);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const { progressState } = useProgress();
 
   useEffect(() => {
     let active = true;
@@ -49,9 +52,12 @@ export function useCourses() {
   }, []);
 
   const filteredCourses = useMemo(() => {
+    const derivedCourses = courses.map((course) =>
+      applyLessonProgress(course, progressState),
+    );
     const searchValue = filters.search.trim().toLowerCase();
 
-    return courses.filter((course) => {
+    return derivedCourses.filter((course) => {
       const matchesSearch =
         !searchValue ||
         course.title.toLowerCase().includes(searchValue) ||
@@ -64,7 +70,7 @@ export function useCourses() {
 
       return matchesSearch && matchesLevel && matchesKind;
     });
-  }, [courses, filters]);
+  }, [courses, filters, progressState]);
 
   return {
     courses,
@@ -75,4 +81,3 @@ export function useCourses() {
     setFilters,
   };
 }
-

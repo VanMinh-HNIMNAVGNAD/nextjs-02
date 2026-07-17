@@ -3,7 +3,17 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-
+import {useEffect, useState} from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from "@/components/ui/button";
 const navigation = [
   { href: "/", label: "Trang chu" },
   { href: "/courses", label: "Khoa hoc" },
@@ -13,9 +23,23 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, logout, user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  console.log("Header render");
+  const confirmLogout = async () => {
+    setIsOpen(false);
+    logout();
+    router.push("/auth/login");
+  }
+
+  useEffect(() => {
+    console.log("header mount");
+    return() => {
+        console.log("header unmount");
+    }
+  });
 
   function handleLogout() {
-    logout();
+    setIsOpen(true);
     router.push("/auth/login");
   }
 
@@ -71,6 +95,24 @@ export default function Header() {
           )}
         </div>
       </div>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Logout</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to logout?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmLogout}>
+              Logout
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 }
