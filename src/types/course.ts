@@ -1,3 +1,5 @@
+import type { Lesson } from "./lesson";
+
 export type CourseLevel = "S" | "PRES" | "TC" | "MTC";
 export type KindOfCourse = "IELTS" | "TOEIC" | "4SKILLS" | "VSTEP";
 export type CourseStatus = "not-started" | "in-progress" | "completed";
@@ -13,6 +15,7 @@ export interface Course {
   totalLessons: number;
   status: CourseStatus;
   progress: number;
+  lessons: Lesson[];
 }
 
 export interface CourseFilters {
@@ -20,4 +23,3 @@ export interface CourseFilters {
   level: CourseLevel | "All";
   kindOfCourse: KindOfCourse | "All";
 }
-

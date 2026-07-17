@@ -1,6 +1,26 @@
-import type { Course } from "@/types";
+import type { Course, Lesson } from "@/types";
 import { apiFetch } from "@/lib/api";
 import { COURSE_API_PATH } from "@/lib/constants";
+
+function createLessons(
+  courseId: string,
+  titles: string[],
+  thumbnailUrl: string,
+): Lesson[] {
+  return titles.map((title, index) => ({
+    id: `lesson-${index + 1}`,
+    courseId,
+    name: title.toLowerCase().replaceAll(" ", "-"),
+    title,
+    duration: 12 + index * 4,
+    thumbnailUrl,
+    url: "",
+    description:
+      "Review the key concept, complete the guided activity, and mark the lesson as completed when finished.",
+    status: index === 0 ? "in-progress" : "not-started",
+    order: index + 1,
+  }));
+}
 
 const mockCourses: Course[] = [
   {
@@ -16,6 +36,16 @@ const mockCourses: Course[] = [
     totalLessons: 12,
     status: "in-progress",
     progress: 35,
+    lessons: createLessons(
+      "ielts-foundation",
+      [
+        "IELTS overview and study plan",
+        "Listening section format",
+        "Reading skimming practice",
+        "Writing task 1 essentials",
+      ],
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
+    ),
   },
   {
     id: "toeic-practice",
@@ -30,6 +60,16 @@ const mockCourses: Course[] = [
     totalLessons: 18,
     status: "in-progress",
     progress: 62,
+    lessons: createLessons(
+      "toeic-practice",
+      [
+        "TOEIC timing strategy",
+        "Photograph questions",
+        "Short conversations",
+        "Reading grammar drills",
+      ],
+      "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80",
+    ),
   },
   {
     id: "four-skills-intensive",
@@ -44,6 +84,16 @@ const mockCourses: Course[] = [
     totalLessons: 20,
     status: "not-started",
     progress: 0,
+    lessons: createLessons(
+      "four-skills-intensive",
+      [
+        "Speaking warm-up routine",
+        "Listening note-taking",
+        "Reading for main ideas",
+        "Writing clear paragraphs",
+      ],
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+    ),
   },
   {
     id: "vstep-speaking",
@@ -58,6 +108,16 @@ const mockCourses: Course[] = [
     totalLessons: 10,
     status: "completed",
     progress: 100,
+    lessons: createLessons(
+      "vstep-speaking",
+      [
+        "VSTEP speaking format",
+        "Part 1 personal questions",
+        "Part 2 solution talk",
+        "Part 3 discussion practice",
+      ],
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80",
+    ).map((lesson) => ({ ...lesson, status: "completed" })),
   },
 ];
 
@@ -68,4 +128,22 @@ export async function fetchCourses(): Promise<Course[]> {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return mockCourses;
   }
+}
+
+export async function fetchCourseById(courseId: string) {
+  const courses = await fetchCourses();
+
+  return courses.find((course) => course.id === courseId) ?? null;
+}
+
+export async function fetchLessonById(courseId: string, lessonId: string) {
+  const course = await fetchCourseById(courseId);
+
+  if (!course) {
+    return null;
+  }
+
+  const lesson = course.lessons.find((item) => item.id === lessonId);
+
+  return lesson ? { course, lesson } : null;
 }

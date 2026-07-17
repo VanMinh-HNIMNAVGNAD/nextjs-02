@@ -4,9 +4,6 @@ export default function Home() {
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:py-16">
       <div className="max-w-2xl">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-emerald-700">
-          Day 1 setup
-        </p>
         <h1 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
           Learn courses with a protected dashboard.
         </h1>
@@ -34,7 +31,7 @@ export default function Home() {
         {[
           ["Auth", "Session is persisted in localStorage."],
           ["Protected", "Course pages redirect anonymous users."],
-          ["Day 2", "Course search and filters are ready."],
+          ["Course search and filters are ready."],
         ].map(([title, description]) => (
           <div
             key={title}

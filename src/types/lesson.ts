@@ -6,9 +6,9 @@ export interface Lesson {
   name: string;
   title: string;
   duration: number;
+  thumbnailUrl: string;
   url: string;
   description: string;
   status: LessonStatus;
   order: number;
 }
-

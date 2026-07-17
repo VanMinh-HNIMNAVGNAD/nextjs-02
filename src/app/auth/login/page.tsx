@@ -40,9 +40,7 @@ function LoginForm() {
     <section className="mx-auto flex w-full max-w-6xl flex-1 items-center px-4 py-10 sm:px-6">
       <div className="grid w-full gap-8 lg:grid-cols-[1fr_420px] lg:items-center">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-emerald-700">
-            Authentication
-          </p>
+          
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
             Sign in to continue learning.
           </h1>
