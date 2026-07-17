@@ -33,7 +33,7 @@ const mockCourses: Course[] = [
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
     level: "S",
     kindOfCourse: "IELTS",
-    totalLessons: 12,
+    totalLessons: 1200,
     status: "in-progress",
     progress: 35,
     lessons: createLessons(

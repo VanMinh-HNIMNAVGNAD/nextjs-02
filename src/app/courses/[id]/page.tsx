@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProgressBar from "@/components/ProgressBar";
+import LessonItem from "@/components/LessonItem";
 import { fetchCourses } from "@/services/courseServices";
 
 export default async function CourseDetailPage({
@@ -30,6 +31,15 @@ export default async function CourseDetailPage({
               className="object-cover"
               priority
             />
+          </div>
+          
+          <div className="mt-8">
+            <h2 className="text-xl font-bold text-slate-950 mb-4">Danh sách bài học</h2>
+            <div className="flex flex-col gap-3">
+              {course.lessons.map((lesson) => (
+                <LessonItem key={lesson.id} lesson={lesson} />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -61,7 +71,7 @@ export default async function CourseDetailPage({
           </div>
 
           <Link
-            href={`/courses/${course.id}/lessons/lesson-1`}
+            href={`/courses/${course.id}/lessons/${course.lessons[0]?.id || "lesson-1"}`}
             className="mt-8 inline-flex w-full items-center justify-center rounded-md bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 sm:w-auto"
           >
             Start lesson
@@ -71,4 +81,3 @@ export default async function CourseDetailPage({
     </section>
   );
 }
-

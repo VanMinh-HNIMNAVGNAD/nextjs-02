@@ -24,7 +24,6 @@ export default function Header() {
   const router = useRouter();
   const { isAuthenticated, logout, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  console.log("Header render");
   const confirmLogout = async () => {
     setIsOpen(false);
     logout();
@@ -32,15 +31,12 @@ export default function Header() {
   }
 
   useEffect(() => {
-    console.log("header mount");
-    return() => {
-        console.log("header unmount");
-    }
-  });
+    return () => {
+      };
+  }, []);
 
   function handleLogout() {
     setIsOpen(true);
-    router.push("/auth/login");
   }
 
   return (
@@ -116,4 +112,3 @@ export default function Header() {
     </header>
   );
 }
-
