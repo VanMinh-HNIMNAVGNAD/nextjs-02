@@ -1,8 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import ProgressBar from "@/components/ProgressBar";
 import LessonItem from "@/components/LessonItem";
+import CourseActionCard from "@/components/CourseActionCard";
 import { fetchCourses } from "@/services/courseServices";
 
 export default async function CourseDetailPage({
@@ -20,9 +19,9 @@ export default async function CourseDetailPage({
 
   return (
     <section className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-      <div className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr]">
+      <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
-          <div className="relative aspect-video overflow-hidden rounded-lg bg-slate-100">
+          <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-100 shadow-sm border border-slate-200/80">
             <Image
               src={course.thumbnailUrl}
               alt={course.title}
@@ -32,9 +31,11 @@ export default async function CourseDetailPage({
               priority
             />
           </div>
-          
+
           <div className="mt-8">
-            <h2 className="text-xl font-bold text-slate-950 mb-4">Danh sách bài học</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">
+              Danh sách bài học ({course.lessons.length})
+            </h2>
             <div className="flex flex-col gap-3">
               {course.lessons.map((lesson) => (
                 <LessonItem key={lesson.id} lesson={lesson} />
@@ -44,38 +45,7 @@ export default async function CourseDetailPage({
         </div>
 
         <div>
-          <div className="mb-3 flex flex-wrap gap-2">
-            <span className="rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">
-              {course.kindOfCourse}
-            </span>
-            <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600">
-              {course.level}
-            </span>
-          </div>
-
-          <h1 className="text-3xl font-bold tracking-tight text-slate-950">
-            {course.title}
-          </h1>
-          <p className="mt-4 text-sm leading-6 text-slate-600">
-            {course.description}
-          </p>
-
-          <div className="mt-6">
-            <div className="mb-2 flex items-center justify-between text-sm">
-              <span className="font-medium text-slate-700">
-                {course.totalLessons} lessons
-              </span>
-              <span className="text-slate-500">{course.progress}%</span>
-            </div>
-            <ProgressBar value={course.progress} />
-          </div>
-
-          <Link
-            href={`/courses/${course.id}/lessons/${course.lessons[0]?.id || "lesson-1"}`}
-            className="mt-8 inline-flex w-full items-center justify-center rounded-md bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 sm:w-auto"
-          >
-            Start lesson
-          </Link>
+          <CourseActionCard course={course} />
         </div>
       </div>
     </section>

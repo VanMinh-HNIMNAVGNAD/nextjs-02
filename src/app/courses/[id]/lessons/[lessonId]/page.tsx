@@ -31,9 +31,8 @@ export default function LessonPage({
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-900" />
       </div>
     );
-  }
+  } 
 
-  // Lấy trạng thái từ Context (localStorage) hoặc trạng thái mặc định của mock data
   const currentStatus = progressState[id]?.[lessonId] || lesson.status;
 
   return (

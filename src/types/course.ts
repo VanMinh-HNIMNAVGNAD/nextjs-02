@@ -15,6 +15,8 @@ export interface Course {
   totalLessons: number;
   status: CourseStatus;
   progress: number;
+  price: number;
+  originalPrice?: number;
   lessons: Lesson[];
 }
 
@@ -23,3 +25,4 @@ export interface CourseFilters {
   level: CourseLevel | "All";
   kindOfCourse: KindOfCourse | "All";
 }
+

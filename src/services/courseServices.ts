@@ -36,6 +36,8 @@ const mockCourses: Course[] = [
     totalLessons: 1200,
     status: "in-progress",
     progress: 35,
+    price: 499000,
+    originalPrice: 799000,
     lessons: createLessons(
       "ielts-foundation",
       [
@@ -60,6 +62,8 @@ const mockCourses: Course[] = [
     totalLessons: 18,
     status: "in-progress",
     progress: 62,
+    price: 350000,
+    originalPrice: 500000,
     lessons: createLessons(
       "toeic-practice",
       [
@@ -84,6 +88,8 @@ const mockCourses: Course[] = [
     totalLessons: 20,
     status: "not-started",
     progress: 0,
+    price: 890000,
+    originalPrice: 1200000,
     lessons: createLessons(
       "four-skills-intensive",
       [
@@ -108,6 +114,7 @@ const mockCourses: Course[] = [
     totalLessons: 10,
     status: "completed",
     progress: 100,
+    price: 0, // Free course
     lessons: createLessons(
       "vstep-speaking",
       [
@@ -120,6 +127,7 @@ const mockCourses: Course[] = [
     ).map((lesson) => ({ ...lesson, status: "completed" })),
   },
 ];
+
 
 export async function fetchCourses(): Promise<Course[]> {
   try {
